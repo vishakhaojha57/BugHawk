@@ -1,0 +1,67 @@
+[
+  {
+    "id": "find-001",
+    "file": "src/services/auth.js",
+    "line": 15,
+    "rule": "no-hardcoded-credentials",
+    "severity": "CRITICAL",
+    "category": "Security",
+    "sourceTool": "semgrep",
+    "message": "Hardcoded secret detected in code.",
+    "snippet": "const jwt_secret = 'super-secret-key';",
+    "aiExplanation": "Hardcoding secrets in source code is a significant security risk. If the repository is ever compromised or made public, the secret can be extracted and used to forge authentication tokens.",
+    "aiFix": "const jwt_secret = process.env.JWT_SECRET;"
+  },
+  {
+    "id": "find-002",
+    "file": "src/utils/helpers.js",
+    "line": 42,
+    "rule": "no-unused-vars",
+    "severity": "MEDIUM",
+    "category": "Quality",
+    "sourceTool": "eslint",
+    "message": "'calculateTotal' is defined but never used.",
+    "snippet": "const calculateTotal = (items) => { return items.length; };",
+    "aiExplanation": "Unused variables contribute to code bloat and can cause confusion for developers trying to understand the codebase. It's best practice to remove them.",
+    "aiFix": "// Removed unused variable calculateTotal"
+  },
+  {
+    "id": "find-003",
+    "file": "package.json",
+    "line": 12,
+    "rule": "npm-audit-axios-vuln",
+    "severity": "HIGH",
+    "category": "Dependency",
+    "sourceTool": "npm-audit",
+    "message": "Server-Side Request Forgery (SSRF) vulnerability in axios.",
+    "snippet": "\"axios\": \"^0.21.1\"",
+    "aiExplanation": "The installed version of axios has a known Server-Side Request Forgery vulnerability. This can allow an attacker to make unauthorized requests from the server.",
+    "aiFix": "\"axios\": \"^0.21.4\""
+  },
+  {
+    "id": "find-004",
+    "file": "src/controllers/userController.js",
+    "line": 88,
+    "rule": "sql-injection",
+    "severity": "HIGH",
+    "category": "Security",
+    "sourceTool": "semgrep",
+    "message": "Potential SQL injection vulnerability. User input is directly concatenated into a SQL query.",
+    "snippet": "const query = 'SELECT * FROM users WHERE username = \\'' + req.body.username + '\\'';",
+    "aiExplanation": "Directly concatenating user input into SQL queries exposes the database to SQL injection attacks, where attackers can manipulate the query logic to access or destroy data.",
+    "aiFix": "const query = 'SELECT * FROM users WHERE username = ?';\ndb.execute(query, [req.body.username]);"
+  },
+  {
+    "id": "find-005",
+    "file": "src/components/Dashboard.js",
+    "line": 120,
+    "rule": "no-unreachable",
+    "severity": "LOW",
+    "category": "Bug",
+    "sourceTool": "eslint",
+    "message": "Unreachable code after return statement.",
+    "snippet": "return true;\nconsole.log('This will never run');",
+    "aiExplanation": "Any code placed after a return, throw, continue, or break statement within the same block will never be executed. This is usually a mistake.",
+    "aiFix": "return true;"
+  }
+]
